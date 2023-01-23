@@ -29,3 +29,12 @@ FUNCIONALIDADE:
 obteve dois prêmios mais rápido.
 
 
+EXECUTANDO A APLICAÇÃO:
+
+Para executar a aplicação será necessário possuir a versão 8 do java instalada e uma IDE com o MAVEN configurado.
+Após configurado o Maven é preciso clonar o repositório https://github.com/evieira1472/movieAPI/  através do botão [CLONE]
+e utilizando o comando "git clone endereco" onde endereço deve ser substituído pela URL escolhida ao clonar o projeto.
+
+Abrir a IDE e importar um novo projeto MAVEN selecionando a pasta mavenAPI baixada em sua maquina local. Ao importar o maven fará o download automáico das dependências, ao finalizar o download das dependências a aplicação estará pronta para ser compilada.
+
+
