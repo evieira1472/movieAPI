@@ -28,6 +28,8 @@ public class FileService {
     @Autowired
     private MovieProducerService movieProducerService;
 
+    private final String URL_FILE = "files/movielist.csv";
+
     public void buildDataFile() {
         try {
             List<String[]> contentFile = readFile();
@@ -56,26 +58,29 @@ public class FileService {
                     }
                 }
             }
-        } catch (Exception e) {
-            System.out.println("ERRO AO CARREGAR OS DADOS DO ARQUIVO: " + e.getMessage());
-        } finally {
             System.out.println("ARQUIVO CARREGADO COM SUCESSO NA BASE DE DADOS.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ERRO AO CARREGAR OS DADOS DO ARQUIVO: " + e.getMessage());
         }
     }
 
     private void linkMovieToProducer(Movie movie, String producerName) {
-        Producer producer = this.producerService.getByName(producerName.trim());
-        if (producer == null || producer.getId() == null) {
-            producer = this.producerService.save(new Producer(producerName.trim()));
+        if (movie != null && !Utils.validaString(producerName).isEmpty()) {
+            Producer producer = this.producerService.getByName(producerName.trim());
+            if (producer == null || producer.getId() == null) {
+                producer = this.producerService.save(new Producer(producerName.trim()));
+            }
+
+            MovieProducer movieProducer = new MovieProducer(movie, producer);
+            this.movieProducerService.save(movieProducer);
         }
 
-        MovieProducer movieProducer = new MovieProducer(movie, producer);
-        this.movieProducerService.save(movieProducer);
     }
 
     private List<String[]> readFile() {
         try {
-            URL res = getClass().getClassLoader().getResource("files/movielist.csv");
+            URL res = getClass().getClassLoader().getResource(URL_FILE);
             Reader reader = Files.newBufferedReader(Paths.get(res.toURI()));
 
             final CSVParser parser = new CSVParserBuilder().withSeparator(';').withIgnoreQuotations(false).build();

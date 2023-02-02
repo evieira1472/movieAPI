@@ -23,14 +23,10 @@ public class MovieService {
     public Movie save(Movie movie) {
         return movieRepository.save(movie);
     }
-    public void saveAll(Iterable<Movie> movies) {
-        movieRepository.saveAll(movies);
-    }
 
     public DataResponse getProducersIntervalMinMax() {
         List<Producer> producersWinner = this.producerRepositiry.getProducersWinners();
         DataResponse response = new DataResponse();
-        Long year = null;
         for (Producer producer : producersWinner) {
             List<Movie> movies = this.movieRepository.getMoviesWinnersByProducerId(producer.getId());
             Movie lastMovie = null;
